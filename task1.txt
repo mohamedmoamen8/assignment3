@@ -1,0 +1,26 @@
+const { error } = require("node:console");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const filePath = path.resolve("./test.txt");
+/* task1 */
+const readStream = fs.createReadStream(filePath, {
+  encoding: "utf-8",
+  highWaterMark: 4,
+});
+
+readStream.on("data", (chunk) => {
+  console.log(chunk);
+  readStream.read(chunk);
+  console.log("----------------------");
+});
+
+readStream.on("close", () => {
+  console.log("----------------------");
+  console.log("finsh reading file");
+  console.log("----------------------");
+});
+readStream.on("error", (err) => {
+  console.error(err);
+});
+
